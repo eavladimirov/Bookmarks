@@ -1,0 +1,31 @@
+.btn{
+    background-color:#ff9966;
+	width: 150px;
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+	margin-top: 10px;
+	text-color: #000000;
+	position: absolute;
+	border-radius: 5px;
+}
+
+.txt{
+    background-color:#ffff80;
+	width: 150px;
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+	margin-top: 10px;
+	text-color: #000000;
+	position: absolute;
+	border-radius: 5px;
+	
+}
+
+.toolbar{
+	padding: 10px 10px 10px 10px;
+	background-color:#ff9966;
+	width: 200px;
+	border-radius: 5px;
+}
+
+
