@@ -5,12 +5,24 @@
   <title>Task</title>
   <script src="jquery-1.12.0.min.js"></script>
   <script src="jquery-ui.js"></script>
-  <script src="code.js"></script>
+  <script src="spectrum.js"></script>
+  <link rel="stylesheet" href="spectrum.css" />
   <link rel="stylesheet" type="text/css" href="styles.css">
+  
+  
+  
+  
+  
 </head>
-<body onLoad="main()" id="body">
+<body id="body">
+
+<div id="picker" onmouseover="drag(this.id)" style="display:none">
+     <input type='text' id="full"/>
+</div>
 
 
+  
+  <script src="code.js"></script>
 </body>
 
 </html>
