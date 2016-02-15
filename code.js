@@ -11,56 +11,103 @@ function main(){
 	var numberTxt = 0;
 	
 	//object button
-	var button = function(numberBtn, title, link){
-		
-		var button = [];
+	var Button = (function(){
 				
-		button.background = "#69D2E7";
+		function Button(numberBtn, title, link){
+			this.setNumberBtn(numberBtn);
+			this.setTitle(title);
+			this.setLink(link);
+		}
 		
-		button.getBackground = function(){
-			return this.background;
+		Button.prototype.getNumberBtn = function(){
+			return this._numberBtn;
 		};
 		
-		button.setBackground = function(value){
-			this.background = value;
+		Button.prototype.setNumberBtn = function(value){
+			this._numberBtn = value;
 		};
 		
-		button.render = function(){
-			document.body.innerHTML += '<div id="btn' + numberBtn.toString() + '" class="btn" onmouseover="drag(this.id)" ondblclick="changeBackground(this.id)"><a href="' + link + '">'+ title +'</a></div>';
+		Button.prototype.getTitle = function(){
+			return this._title;
 		};
 		
-		return button;
-	};
+		Button.prototype.setTitle = function(value){
+			this._title = value;
+		};
+		
+		Button.prototype.getLink = function(){
+			return this._link;
+		};
+		
+		Button.prototype.setLink = function(value){
+			this._link = value;
+		};
+		
+		Button.prototype.getBackground = function(){
+			return this._background;
+		};
+		
+		Button.prototype.setBackground = function(value){
+			this._background = value;
+		};
+		
+		Button.prototype.render = function(){
+				document.body.innerHTML += '<div id="btn' + this.getNumberBtn() + '" class="btn" onmouseover="drag(this.id)" ondblclick="changeBackground(this.id)"><a href="' + this.getLink() + '">'+ this.getTitle() +'</a></div>';
+			};
+			
+		return Button;
+	}());
 	//end object button
 	
 	//object text
-	var text = function(numberTxt, txt){
+	var Text = (function(){
+				
+		function Text(numberTxt, txt){
+			this.setNumberTxt(numberTxt);
+			this.setText(txt);
+			
+		}
 		
-		var text = [];
-		
-		text.background = "#69D2E7";
-		
-		text.getBackground = function(){
-			return this.background;
+		Text.prototype.getNumberTxt = function(){
+			return this._numberTxt;
 		};
 		
-		text.setBackground = function(value){
-			this.background = value;
+		Text.prototype.setNumberTxt = function(value){
+			this._numberTxt = value;
 		};
 		
-		text.render = function(){
-			document.body.innerHTML += '<div id="txt' + numberTxt.toString() + '" class="txt" onmouseover="drag(this.id)" ondblclick="changeBackground(this.id)">' + txt + '</div>';
+		Text.prototype.getText = function(){
+			return this._text;
 		};
 		
-		return text;
-	};
+		Text.prototype.setText = function(value){
+			this._text = value;
+		};
+		
+		Text.prototype.getBackground = function(){
+			return this._background;
+		};
+		
+		Text.prototype.setBackground = function(value){
+			this._background = value;
+		};
+		
+		Text.prototype.render = function(){
+				document.body.innerHTML += '<div id="txt' + this.getNumberTxt() + '" class="txt" onmouseover="drag(this.id)" ondblclick="changeBackground(this.id)">' + this.getText() + '</div>';
+			};
+			
+		return Text;
+	}());
 	//end object text
 
 	//object toolbar
-	var toolbar = function(){
- 
-		var toolbar = [];
-		toolbar.init = function(){
+	var Toolbar = (function(){
+ 		
+		function Toolbar(){
+		
+		}
+		
+		Toolbar.prototype.init = function(){
 			document.getElementById("createButton").addEventListener("click", function(event) {
 			toolbar.createButton(event);
 			}, false);
@@ -69,32 +116,32 @@ function main(){
 			toolbar.createText(event);
 			}, false);			
 		};
-		toolbar.render = function(){
+		Toolbar.prototype.render = function(){
 			document.body.innerHTML += '<div id="toolbar" class="toolbar" onmouseover="drag(this.id)"><button id="add" onclick="showAddLink()" >+ Link</button><button id="create" onclick="showAddText()">+ Note</button><div style="display:none" id="addLink" ><label for="title">Title:</label> <input type="text" id="title"><br><label for="link">Link:</label> <input type="text" id="link"><br><button id="createButton" >Add Link</button><button  onclick="hideAddLink()" >Close</button></div><div style="display:none" id="addText" ><label for="text">Note:</label> <input type="text" id="text"><button id="createText" >Add Note</button><button  onclick="hideAddText()" >Close</button></div></div>';
 		};
-		toolbar.createButton = function(){
+		Toolbar.prototype.createButton = function(){
 			numberBtn +=1;
-			var btn = button(numberBtn, document.getElementById("title").value, document.getElementById("link").value);
+			var btn = new Button(numberBtn, document.getElementById("title").value, document.getElementById("link").value);
 			btn.render();
 			arrBtn["btn" + numberBtn] = btn;
 			toolbar.init();
 			$( "#addLink" ).slideUp(500);
 		};
-		toolbar.createText = function(){
+		Toolbar.prototype.createText = function(){
 			numberTxt +=1;
-			var txt = text(numberTxt, document.getElementById("text").value);
+			var txt = new Text(numberTxt, document.getElementById("text").value);
 			txt.render();
 			arrTxt["txt" + numberTxt] = txt;
 			toolbar.init();
 			$( "#addText" ).slideUp(500);
 		};
 		
-		return toolbar;
-	};
+		return Toolbar;
+	}());
 	//end object toolbar
 
 	
-	var toolbar = toolbar();
+	var toolbar = new Toolbar();
 	
 	toolbar.render();
 	toolbar.init();
@@ -193,7 +240,7 @@ $( ".sp-choose" ).on( "click", function() {
 	}else{
 		arrTxt[id].setBackground($(".sp-input").val());
 	}
-	
+	//console.log(arrBtn[id].getBackground());
 	$( "#picker" ).slideUp(500);
 	window.setTimeout(destroyDialog,800);
 	
